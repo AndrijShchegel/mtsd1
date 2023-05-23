@@ -68,10 +68,13 @@ const readFile = () => {
     });
 }
 
-if (!!filePath) {
-    readFile();
-} else {
-    readFromConsole();
+const main = () => {
+    if (!!filePath) {
+        readFile();
+    } else {
+        readFromConsole();
+    }
+    readline.close();
 }
 
-readline.close();
+main();
