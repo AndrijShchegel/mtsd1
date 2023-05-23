@@ -1,5 +1,19 @@
 'use strict'
 
+const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+readline.question('a = ', a => {
+    readline.question('b = ', b => {
+        readline.question('c = ', c => {
+            sqwareSolver(a,b,c);
+            readline.close();
+        });
+    });
+});
+
 const sqwareSolver = (a, b, c) => {
     console.log (`Equation is: (${a}) x^2 + (${b}) x + (${c}) = 0`);
     const discriminant = b*b-4*a*c;
