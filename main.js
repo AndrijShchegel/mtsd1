@@ -1,5 +1,7 @@
 'use strict'
 
+const fs = require("fs");
+const filePath = process.argv[2];
 const readline = require('readline').createInterface({
     input: process.stdin,
     output: process.stdout
@@ -19,15 +21,6 @@ const consoleRead = (letter, callback) => {
     });
 }
 
-consoleRead("a", (a) => {
-    consoleRead("b", (b) => {
-        consoleRead("c", (c) => {
-            sqwareSolver(a,b,c);
-            readline.close();
-        });
-    });
-});
-
 const sqwareSolver = (a, b, c) => {
     console.log (`Equation is: (${a}) x^2 + (${b}) x + (${c}) = 0`);
     const discriminant = b*b-4*a*c;
@@ -43,3 +36,42 @@ const sqwareSolver = (a, b, c) => {
         console.log('There is no roots');
     }
 }
+
+const readFromConsole = () => {
+    consoleRead("a", (a) => {
+        consoleRead("b", (b) => {
+            consoleRead("c", (c) => {
+                sqwareSolver(a,b,c);
+            });
+        });
+    });
+}
+
+const readFile = () => {
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            return console.log(`Error. File ${filePath} does not exist`);
+        }
+        const numbers = data.split(' ');
+        if (numbers.length !== 3) {
+            return console.log(`Error. File '${filePath}' has invalid file format`);
+        } else if (numbers[0] === "0") {
+            return console.log("Error. Expected number of a cannot be 0");
+        } else {
+            for (let i = 0; i < numbers.length; i++) {
+                if (isNaN(numbers[i])) {
+                    return console.log(`Error. File '${filePath}' has invalid file format`);
+                }
+            }
+            sqwareSolver(...numbers);
+        }
+    });
+}
+
+if (!!filePath) {
+    readFile();
+} else {
+    readFromConsole();
+}
+
+readline.close();
