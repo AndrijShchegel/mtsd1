@@ -70,8 +70,7 @@ const readFile = () => {
 
 if (!!filePath) {
     readFile();
+    readline.close();
 } else {
     readFromConsole();
 }
-
-readline.close();
