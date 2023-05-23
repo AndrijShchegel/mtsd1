@@ -42,6 +42,7 @@ const readFromConsole = () => {
         consoleRead("b", (b) => {
             consoleRead("c", (c) => {
                 sqwareSolver(a,b,c);
+                readline.close();
             });
         });
     });
@@ -71,10 +72,11 @@ const readFile = () => {
 const main = () => {
     if (!!filePath) {
         readFile();
+        readline.close();
     } else {
         readFromConsole();
     }
-    readline.close();
+
 }
 
 main();
