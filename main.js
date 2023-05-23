@@ -5,9 +5,23 @@ const readline = require('readline').createInterface({
     output: process.stdout
 });
 
-readline.question('a = ', a => {
-    readline.question('b = ', b => {
-        readline.question('c = ', c => {
+const consoleRead = (letter, callback) => {
+    readline.question(`${letter} = `, (input) => {
+        if (isNaN(input) || input === "") {
+            console.log(`Error. Expected a valid real number, got ${input} instead`);
+            consoleRead(letter, callback);
+        } else if (letter === "a" && input === "0") {
+            console.log("Error. Expected number of a cannot be 0");
+            consoleRead(letter, callback);
+        } else {
+            callback(input);
+        }
+    });
+}
+
+consoleRead("a", (a) => {
+    consoleRead("b", (b) => {
+        consoleRead("c", (c) => {
             sqwareSolver(a,b,c);
             readline.close();
         });
